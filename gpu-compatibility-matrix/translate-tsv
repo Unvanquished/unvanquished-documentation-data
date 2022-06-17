@@ -18,39 +18,6 @@ then
 	exit 1
 fi
 
-# They have been moved to css to avoid duplicating that much text.
-<<\EOF
-declare -A availability_style_dict
-availability_style_dict=(
-	['lost']='background-color: #430000 !important; color: #fb4c4c !important;'
-	['foreign']='background-color: blue !important; color: red !important;'
-	['unplugged']='background-color: blue !important; color: orange !important;'
-	['unconfigured']='background-color: blue !important; color: yellow !important;'
-	['configured']='background-color: green !important; color: white !important;'
-)
-
-declare -A status_style_dict
-status_style_dict=(
-	['hang']='background-color: darkred !important; color: black !important;'
-	['crash']='background-color: red !important; color: black !important;'
-	['missing']='background-color: red !important; color: black !important;'
-	['broken']='background-color: chocolate !important; color: black !important;'
-	['glitchy']='background-color: yellow !important; color: black !important;'
-	['slow']='background-color: yellow !important; color: black !important;'
-	['playable']='background-color: lightgreen !important; color: green !important;'
-	['passed']='background-color: green !important; color: white !important;'
-)
-
-declare -A preset_style_dict
-preset_style_dict=(
-	['lowest']='background-color: yellow !important; color: black !important;'
-	['low']='background-color: yellow !important; color: black !important;'
-	['medium']='background-color: lightgreen !important; color: green !important;'
-	['high']='background-color: green !important; color: white !important;'
-	['ultra']='background-color: green !important; color: white !important;'
-)
-EOF
-
 printCell () {
 	local markup="${1}"
 	local class="${2}"
