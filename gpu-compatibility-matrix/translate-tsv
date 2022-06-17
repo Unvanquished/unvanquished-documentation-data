@@ -231,7 +231,7 @@ do
 
 					if [ "${cell}" = 'HyperTransport' ]
 					then
-						printed_cell='H<span class="LD">yper</span>T<span class="disposable">ransport</span>'
+						printed_cell='H<span class="LD">yper</span>T<span class="LD">ransport</span>'
 					elif [ "${cell}" != '-' ]
 					then
 						printed_cell="$(echo "${cell}" | sed -e 's| \(.*\)|<span class="LD"> \1</span>|')"
