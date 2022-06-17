@@ -229,7 +229,7 @@ do
 
 					printCell "${markup}" 'label' '-' "${cell}"
 				else
-					size=$(echo "${cell}" | sed -e 's/×/*/' | bc -l)
+					size=$(echo "${cell}" | sed -e 's/\+//;s/×/*/' | bc -l)
 
 					if [ ${size} -lt $((1280 * 720)) ]
 					then
