@@ -187,17 +187,19 @@ do
 			'Availability')
 				if "${fake_data}"
 				then
-					printCell "${markup}" 'label disposable' '-' "${cell}"
+					printCell "${markup}" 'LL LD' '-' "${cell}"
 				else
-					printCell "${markup}" "label disposable availability-${cell}" '-' "${cell}"
+					keyword="$(echo "${cell}" | cut -c1-3)"
+					printCell "${markup}" "LL LD SA-${keyword}" '-' "${cell}"
 				fi
 				;;
 			'Status')
 				if "${fake_data}"
 				then
-					printCell "${markup}" 'label' '-' "${cell}"
+					printCell "${markup}" 'LL' '-' "${cell}"
 				else
-					printCell "${markup}" "label status-${cell}" '-' "${cell}"
+					keyword="$(echo "${cell}" | cut -c1-3)"
+					printCell "${markup}" "LL SS-${keyword}" '-' "${cell}"
 				fi
 
 				case "${cell}" in
@@ -214,9 +216,10 @@ do
 						cell='N/A'
 					fi
 
-					printCell "${markup}" 'label' '-' "${cell}"
+					printCell "${markup}" 'LL' '-' "${cell}"
 				else
-					printCell "${markup}" "label preset-${cell}" '-' "${cell}"
+					keyword="$(echo "${cell}" | cut -c1-3)"
+					printCell "${markup}" "LL SP-${keyword}" '-' "${cell}"
 				fi
 				;;
 			'Resolution')
@@ -227,30 +230,30 @@ do
 						cell='N/A'
 					fi
 
-					printCell "${markup}" 'label' '-' "${cell}"
+					printCell "${markup}" 'LL' '-' "${cell}"
 				else
 					size=$(echo "${cell}" | sed -e 's/\+//;s/×/*/' | bc -l)
 
 					if [ ${size} -lt $((1280 * 720)) ]
 					then
-						resolution='low'
+						keyword='low'
 					elif [ ${size} -ge $((1920 * 1080)) ]
 					then
-						resolution='ultra'
+						keyword='ult' # ultra
 					else
-						resolution='medium'
+						keyword='med' # medium
 					fi
 
-					printCell "${markup}" "label preset-${resolution}" '-' "${cell}"
+					printCell "${markup}" "LL SP-${keyword}" '-' "${cell}"
 				fi
 				;;
 			'Tester')
-				printCell "${markup}" 'label disposable' '-' "${cell}"
+				printCell "${markup}" 'LL LD' '-' "${cell}"
 				;;
 			'Bus')
 				if "${fake_data}"
 				then
-					printCell "${markup}" 'label' '-' "${cell}"
+					printCell "${markup}" 'LL' '-' "${cell}"
 				else
 					if [ "${previous_cell}" = '' ]
 					then
@@ -261,28 +264,28 @@ do
 
 					if [ "${cell}" = 'HyperTransport' ]
 					then
-						printed_cell='H<span class="disposable">yper</span>T<span class="disposable">ransport</span>'
+						printed_cell='H<span class="LD">yper</span>T<span class="disposable">ransport</span>'
 					elif [ "${cell}" != '-' ]
 					then
-						printed_cell="$(echo "${cell}" | sed -e 's| \(.*\)|<span class="disposable"> \1</span>|')"
+						printed_cell="$(echo "${cell}" | sed -e 's| \(.*\)|<span class="LD"> \1</span>|')"
 					else
 						printed_cell="${cell}"
 					fi
 
-					bus_style='-'
+					keyword='unk' # unknown
 					case "${bus}" in
 						'PCI')
-							bus_style='low'
+							keyword='low'
 							;;
 						'AGP'|'HyperTransport')
-							bus_style='medium'
+							keyword='med' # medium
 							;;
 						'PCIe')
-							bus_style='high'
+							keyword='hig' # high
 							;;
 					esac
 
-					printCell "${markup}" "label preset-${bus_style}" '-' "${printed_cell}"
+					printCell "${markup}" "LL SP-${keyword}" '-' "${printed_cell}"
 				fi
 				;;
 			'OpenGL')
@@ -290,31 +293,31 @@ do
 				then
 					if [ "${cell}" = 'OpenGL' ]
 					then
-						printed_cell='<span class="disposable">Open</span>GL'
+						printed_cell='<span class="LD">Open</span>GL'
 					else
 						printed_cell="${cell}"
 					fi
 
-					printCell "${markup}" 'label' '-' "${printed_cell}"
+					printCell "${markup}" 'LL' '-' "${printed_cell}"
 				else
 					num="$(echo "${cell}" | sed -e 's|Core ||;s/\.//;s/\?//')"
-					printed_cell="$(echo "${cell}" | sed -e 's|Core |<span class="disposable">Core </span>|')"
+					printed_cell="$(echo "${cell}" | sed -e 's|Core |<span class="LD">Core </span>|')"
 
-					num_style='-'
+					keyword='unk' # unknown
 					if [ "${num}" = "No" ]
 					then
-						num_style='missing'
+						keyword='mis' # missing
 					elif [ "${num}" -lt '21' ]
 					then
-						num_style='missing'
+						keyword='mis' # missing
 					elif [ "${num}" -lt '30' ]
 					then
-						num_style='slow'
+						keyword='slo' # slow
 					else
-						num_style='passed'
+						keyword='pas' # passed
 					fi
 
-					printCell "${markup}" "label status-${num_style}" '-' "${printed_cell}"
+					printCell "${markup}" "LL SS-${keyword}" '-' "${printed_cell}"
 				fi
 				;;
 			'Updated')
@@ -322,23 +325,23 @@ do
 				then
 					last_update="$(printf '%s\n%s\n' "${last_update}" "${cell}" | sort | tail -n1)"
 				fi
-				printCell "${markup}" 'disposable' '-' "${cell}"
+				printCell "${markup}" 'LD' '-' "${cell}"
 				;;
 			'Note')
-				printCell "${markup}" 'label' '-' "${cell}"
+				printCell "${markup}" 'LL' '-' "${cell}"
 				;;
 			'Launch')
 				if [ "${cell}" != '-' ]
 				then
-					printed_cell="$(echo "${cell}" | sed -e 's|[ ]*(.*||;s|\([0-9][0-9][0-9][0-9]\)\(..*\)|\1<span class="disposable">\2</span>|')"
+					printed_cell="$(echo "${cell}" | sed -e 's|[ ]*(.*||;s|\([0-9][0-9][0-9][0-9]\)\(..*\)|\1<span class="LD">\2</span>|')"
 				else
 					printed_cell="${cell}"
 				fi
-				printCell "${markup}" 'special' '-' "${printed_cell}"
+				printCell "${markup}" 'LS' '-' "${printed_cell}"
 				;;
 			'Brand')
 				gpu_brand="${cell}"
-				printCell "${markup}" 'special' '-' "${cell}"
+				printCell "${markup}" 'LS' '-' "${cell}"
 				;;
 			'Name')
 				gpu_name="${cell}"
@@ -353,13 +356,13 @@ do
 						cell="<span id='${anchor}'></span>[[#${anchor}|${gpu_name}]]"
 					fi
 				fi
-				printCell "${markup}" 'special' '-' "${cell}"
+				printCell "${markup}" 'LS' '-' "${cell}"
 				;;
 			'Micro arch.'|'System'|'Kernel module'|'OpenGL driver')
-				printCell "${markup}" 'special' '-' "${cell}"
+				printCell "${markup}" 'LS' '-' "${cell}"
 				;;
 			*)
-				printCell "${markup}" 'disposable' '-' "${cell}"
+				printCell "${markup}" 'LD' '-' "${cell}"
 				;;
 		esac
 
@@ -381,7 +384,7 @@ do
 	then
 		if [ "${markup}" = 'th' ]
 		then
-			printCell "${markup}" 'disposable' '-' "Share"
+			printCell "${markup}" 'LD' '-' "Share"
 		else
 			cell=''
 			if [ "${gpu_brand}" != '↑' -a "${gpu_name}" != '↑' ]
@@ -392,7 +395,7 @@ do
 
 			cell="${cell}[[#${anchor}|link 🖜]]"
 			
-			printCell "${markup}" 'disposable' '-' "${cell}"
+			printCell "${markup}" 'LD' '-' "${cell}"
 		fi
 
 		println
