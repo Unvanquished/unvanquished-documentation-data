@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+
+set -x
+
+lsb_release -a
+
+uname -a
+
+printf '0300 0302 0380' \
+	| xargs -d' ' -I{} lspci -d ::{} -nn -mm -k -v
+
+xrandr --listproviders | egrep '^Provider ' | cut -f1 -d':' | cut -f2 -d' ' \
+	| xargs -I{} sh -c 'DRI_PRIME={} glxinfo -B'

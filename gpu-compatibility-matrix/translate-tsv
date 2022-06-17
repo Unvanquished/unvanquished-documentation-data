@@ -1,0 +1,413 @@
+#! /usr/bin/env bash
+
+# CC0 1.0 Unvanquished Developers
+# https://creativecommons.org/publicdomain/zero/1.0/
+
+set -e
+set -u
+
+pack_output='false'
+if [ "${1:-}" == '--pack' ]
+then
+	pack_output='true'
+	shift
+fi
+
+if [ -z "${1:-}" ]
+then
+	exit 1
+fi
+
+# They have been moved to css to avoid duplicating that much text.
+<<\EOF
+declare -A availability_style_dict
+availability_style_dict=(
+	['lost']='background-color: #430000 !important; color: #fb4c4c !important;'
+	['foreign']='background-color: blue !important; color: red !important;'
+	['unplugged']='background-color: blue !important; color: orange !important;'
+	['unconfigured']='background-color: blue !important; color: yellow !important;'
+	['configured']='background-color: green !important; color: white !important;'
+)
+
+declare -A status_style_dict
+status_style_dict=(
+	['hang']='background-color: darkred !important; color: black !important;'
+	['crash']='background-color: red !important; color: black !important;'
+	['missing']='background-color: red !important; color: black !important;'
+	['broken']='background-color: chocolate !important; color: black !important;'
+	['glitchy']='background-color: yellow !important; color: black !important;'
+	['slow']='background-color: yellow !important; color: black !important;'
+	['playable']='background-color: lightgreen !important; color: green !important;'
+	['passed']='background-color: green !important; color: white !important;'
+)
+
+declare -A preset_style_dict
+preset_style_dict=(
+	['lowest']='background-color: yellow !important; color: black !important;'
+	['low']='background-color: yellow !important; color: black !important;'
+	['medium']='background-color: lightgreen !important; color: green !important;'
+	['high']='background-color: green !important; color: white !important;'
+	['ultra']='background-color: green !important; color: white !important;'
+)
+EOF
+
+printCell () {
+	local markup="${1}"
+	local class="${2}"
+	local style="${3}"
+	local cell="${4}"
+
+	if [ "${class}" = '-' ]
+	then
+		class=''
+	else
+		class=" class=\"${class}\""
+	fi
+
+	if [ "${style}" = '-' ]
+	then
+		style=''
+	else
+		style=" style=\"${style}\""
+	fi
+
+	printf '<%s%s%s>%s</%s>' "${markup}" "${class}" "${style}" "${cell}" "${markup}"
+}
+
+println () {
+	if "${pack_output}"
+	then
+		printf ''
+	else
+		printf '\n'
+	fi
+}
+
+sanitizeAnchor () {
+	echo "${1}" | sed -e 's/[^A-Za-z0-9.-]/_/g;s/_\+/_/g;s/_*$//'
+}
+
+declare -a line_list
+readarray -t line_list < <(cat "${1}" | dos2unix)
+
+last_update='00000-00-00'
+status_index='-1'
+tested_gpu_count='0'
+tested_configuration_count='0'
+
+printf '<noinclude>{{Documentation}}</noinclude>'
+println
+
+printf '<table class="gpumatrix">'
+println
+
+for ((i = 0 ; i < "${#line_list[@]}" ; i++))
+do
+	declare -a cell_list
+	readarray -t cell_list < <(echo "${line_list[$i]}" | tr '\t' '\n')
+
+	if [ "${cell_list[0]}" = '' ]
+	then
+		continue
+	fi
+
+	if [ "${status_index}" != '-1' ]
+	then
+		if [ "${cell_list[${status_index}]}" = '-' ]
+		then
+			continue
+		fi
+		if [ "${vendor_index}" != '-1' ]
+		then
+			tested_configuration_count="$((${tested_configuration_count} + 1))"
+			if [ "${cell_list[${vendor_index}]}" != '↑' ]
+			then
+				tested_gpu_count="$((${tested_gpu_count} + 1))"
+			fi
+		fi
+	fi
+
+	printf '<tr>'
+	println
+
+	if [ "${cell_list[0]}" = 'Brand' ]
+	then
+		markup='th'
+	else
+		markup='td'
+	fi
+
+	declare -a column_title_list
+	declare -a previous_cell_list
+
+	test_failure='false'
+
+	for ((j = 0 ; j < "${#cell_list[@]}" ; j++))
+	do
+		cell="${cell_list[${j}]}"
+		previous_cell=''
+
+		fake_data='false'
+
+		if [ "${markup}" = 'th' ]
+		then
+			column_title_list["${j}"]="${cell}"
+			previous_cell_list["${j}"]='-'
+			fake_data='true'
+
+			if [ "${cell}" = 'Status' ]
+			then
+				status_index="${j}"
+			elif [ "${cell}" = 'Vendor' ]
+			then
+				vendor_index="${j}"
+			fi
+		fi
+
+		case "${column_title_list[${j}]}" in
+			'Lith.'|'Core freq.'|'Shader freq.'|'Memory freq.'|'Mem. width, type'|'GLSL'|'FPS')
+				continue
+				;;
+		esac
+
+		case "${cell}" in
+			'-')
+				fake_data='true'
+				;;
+			'↑')
+				previous_cell="${previous_cell_list[${j}]}"
+				;;
+			'')
+				fake_data='true'
+				cell='-'
+				;;
+		esac
+
+		case "${column_title_list[${j}]}" in
+			'Availability')
+				if "${fake_data}"
+				then
+					printCell "${markup}" 'label disposable' '-' "${cell}"
+				else
+					printCell "${markup}" "label disposable availability-${cell}" '-' "${cell}"
+				fi
+				;;
+			'Status')
+				if "${fake_data}"
+				then
+					printCell "${markup}" 'label' '-' "${cell}"
+				else
+					printCell "${markup}" "label status-${cell}" '-' "${cell}"
+				fi
+
+				case "${cell}" in
+					'hang'|'crash'|'missing')
+						test_failure='true'
+					;;
+				esac
+				;;
+			'Preset')
+				if "${fake_data}"
+				then
+					if "${test_failure}"
+					then
+						cell='N/A'
+					fi
+
+					printCell "${markup}" 'label' '-' "${cell}"
+				else
+					printCell "${markup}" "label preset-${cell}" '-' "${cell}"
+				fi
+				;;
+			'Resolution')
+				if "${fake_data}"
+				then
+					if "${test_failure}"
+					then
+						cell='N/A'
+					fi
+
+					printCell "${markup}" 'label' '-' "${cell}"
+				else
+					size=$(echo "${cell}" | sed -e 's/×/*/' | bc -l)
+
+					if [ ${size} -lt $((1280 * 720)) ]
+					then
+						resolution='low'
+					elif [ ${size} -ge $((1920 * 1080)) ]
+					then
+						resolution='ultra'
+					else
+						resolution='medium'
+					fi
+
+					printCell "${markup}" "label preset-${resolution}" '-' "${cell}"
+				fi
+				;;
+			'Tester')
+				printCell "${markup}" 'label disposable' '-' "${cell}"
+				;;
+			'Bus')
+				if "${fake_data}"
+				then
+					printCell "${markup}" 'label' '-' "${cell}"
+				else
+					if [ "${previous_cell}" = '' ]
+					then
+						bus="$(echo "${cell}" | cut -f1 -d' ')"
+					else
+						bus="$(echo "${previous_cell}" | cut -f1 -d' ')"
+					fi
+
+					if [ "${cell}" = 'HyperTransport' ]
+					then
+						printed_cell='H<span class="disposable">yper</span>T<span class="disposable">ransport</span>'
+					elif [ "${cell}" != '-' ]
+					then
+						printed_cell="$(echo "${cell}" | sed -e 's| \(.*\)|<span class="disposable"> \1</span>|')"
+					else
+						printed_cell="${cell}"
+					fi
+
+					bus_style='-'
+					case "${bus}" in
+						'PCI')
+							bus_style='low'
+							;;
+						'AGP'|'HyperTransport')
+							bus_style='medium'
+							;;
+						'PCIe')
+							bus_style='high'
+							;;
+					esac
+
+					printCell "${markup}" "label preset-${bus_style}" '-' "${printed_cell}"
+				fi
+				;;
+			'OpenGL')
+				if "${fake_data}"
+				then
+					if [ "${cell}" = 'OpenGL' ]
+					then
+						printed_cell='<span class="disposable">Open</span>GL'
+					else
+						printed_cell="${cell}"
+					fi
+
+					printCell "${markup}" 'label' '-' "${printed_cell}"
+				else
+					num="$(echo "${cell}" | sed -e 's|Core ||;s/\.//;s/\?//')"
+					printed_cell="$(echo "${cell}" | sed -e 's|Core |<span class="disposable">Core </span>|')"
+
+					num_style='-'
+					if [ "${num}" = "No" ]
+					then
+						num_style='missing'
+					elif [ "${num}" -lt '21' ]
+					then
+						num_style='missing'
+					elif [ "${num}" -lt '30' ]
+					then
+						num_style='slow'
+					else
+						num_style='passed'
+					fi
+
+					printCell "${markup}" "label status-${num_style}" '-' "${printed_cell}"
+				fi
+				;;
+			'Updated')
+				if [ ${markup} = 'td' ]
+				then
+					last_update="$(printf '%s\n%s\n' "${last_update}" "${cell}" | sort | tail -n1)"
+				fi
+				printCell "${markup}" 'disposable' '-' "${cell}"
+				;;
+			'Note')
+				printCell "${markup}" 'label' '-' "${cell}"
+				;;
+			'Launch')
+				if [ "${cell}" != '-' ]
+				then
+					printed_cell="$(echo "${cell}" | sed -e 's|[ ]*(.*||;s|\([0-9][0-9][0-9][0-9]\)\(..*\)|\1<span class="disposable">\2</span>|')"
+				else
+					printed_cell="${cell}"
+				fi
+				printCell "${markup}" 'special' '-' "${printed_cell}"
+				;;
+			'Brand')
+				gpu_brand="${cell}"
+				printCell "${markup}" 'special' '-' "${cell}"
+				;;
+			'Name')
+				gpu_name="${cell}"
+				if [ "${markup}" = 'td' ]
+				then
+					cell=''
+					if [ "${gpu_name}" = '↑' ]
+					then
+						cell='↑'
+					else
+						anchor="$(sanitizeAnchor "${gpu_brand}")_$(sanitizeAnchor "${gpu_name}")"
+						cell="<span id='${anchor}'></span>[[#${anchor}|${gpu_name}]]"
+					fi
+				fi
+				printCell "${markup}" 'special' '-' "${cell}"
+				;;
+			'Micro arch.'|'System'|'Kernel module'|'OpenGL driver')
+				printCell "${markup}" 'special' '-' "${cell}"
+				;;
+			*)
+				printCell "${markup}" 'disposable' '-' "${cell}"
+				;;
+		esac
+
+		if [ "${markup}" = 'th' ]
+		then
+			previous_cell_list["${j}"]='-'
+		elif [ "${cell}" = '↑' ]
+		then
+			previous_cell_list["${j}"]="${previous_cell}"
+		else
+			previous_cell_list["${j}"]="${cell}"
+		fi
+
+		println
+	done
+	
+	# Column with share link, link is now set on GPU name instead.
+	if false
+	then
+		if [ "${markup}" = 'th' ]
+		then
+			printCell "${markup}" 'disposable' '-' "Share"
+		else
+			cell=''
+			if [ "${gpu_brand}" != '↑' -a "${gpu_name}" != '↑' ]
+			then
+				anchor="$(sanitizeAnchor "${gpu_brand}")_$(sanitizeAnchor "${gpu_name}")"
+				cell="<span id='${anchor}'></span>"
+			fi
+
+			cell="${cell}[[#${anchor}|link 🖜]]"
+			
+			printCell "${markup}" 'disposable' '-' "${cell}"
+		fi
+
+		println
+	fi
+
+	printf '</tr>'
+	println
+done
+
+printf '</table>'
+println
+
+printf "Tested GPUs: '''${tested_gpu_count}''', "
+printf "tested configurations: '''${tested_configuration_count}''', "
+printf "last update: '''${last_update}'''."
+
+# This one must always be forced, do not use println.
+printf '\n'

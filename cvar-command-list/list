@@ -1,0 +1,59 @@
+#! /usr/bin/env bash
+
+# CC0 1.0 Unvanquished Developers
+# https://creativecommons.org/publicdomain/zero/1.0/
+
+set -e
+set -u
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+if [ "$(uname -s)" != 'Linux' ]
+then
+	echo 'ERROR: This script expects to run on Linux for now.' >&2
+	exit 1
+fi
+
+TMPDIR="${TMPDIR-/tmp}"
+
+temp_home_path="$(mktemp -d "${TMPDIR}/unvanquished-list-home-XXXXXXXX")"
+
+home_path="${XDG_DATA_HOME:-${HOME}/.local/share}/unvanquished"
+lib_path="${home_path}/base"
+
+case "${1:-}" in
+	'cvars')
+		cmd='listCvars'
+		name='cvars'
+		;;
+	'cmds')
+		cmd='listCmds'
+		name='commands'
+		;;
+	'')
+		echo 'ERROR: missing option: cvars or cmds.' 2>&1
+		exit 1
+		;;
+	*)
+		echo 'ERROR: bad option.' 2>&1
+		exit 1
+		;;
+esac
+shift
+
+daemon_path="${1:-${lib_path}/daemon}"
+shift || true
+
+xvfb-run "${daemon_path}" \
+	-homepath "${temp_home_path}" \
+	+devmap plat23 \
+	+delay 1f "${cmd}" \
+	+delay 1f quit \
+	2>&1 \
+| egrep '^  |^[0-9]+ '"${name}"'$' \
+| sed -e 's/\^\*//g' \
+| sort
+
+rm -rf "${temp_home_path}"
+
+#EOF
