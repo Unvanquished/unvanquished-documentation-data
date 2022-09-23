@@ -1,0 +1,53 @@
+Human Players	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
+Battlesuit	PhilZero	lhdc	Stannum	gavlig	Ishq	Ingame	CC BY-SA 3.0
+Current Male		Angelo	Angelo			Ingame	CC BY-SA 3.0
+New Male		RXMT	Casey (female texture reuse)			Modelled	CC BY-SA 3.0
+Female		Casey	Casey			Modelled	CC BY-SA 3.0
+Glove / edited armour		Angelo / RXMT?? (edited)	Angelo / Stannum / RXMT (edited glove texture)			Modelled	CC BY-SA 3.0
+Light Armour		Angelo	Angelo / Stannum (touch up)			Ingame	CC BY-SA 3.0
+Medium Armour		Angelo	Angelo / Stannum / Viech (red deviation)			Ingame	CC BY-SA 3.0
+Jetpack	AlexBo	lhdc	lhdc		Enneract	Ingame	CC BY-SA 3.0
+Human Weapons	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
+Construction Kit (legacy)	Stannum	Stannum	Stannum	Stannum		Ingame	CC BY-SA 3.0
+Blaster (legacy)	Stannum	Stannum	Stannum	Stannum	None	Ingame	CC BY-SA 3.0
+Pistol	AlexBo	AlexRaidock	AlexRaidock			Modelled	CC BY-SA 3.0
+Pistol	AlexBo	Cupside	Cupside		Ishq	Modelled	CC BY-SA 3.0
+SMG/Rifle	AlexBo	hristew		Burning Ice	Enneract	Ingame	CC BY-SA 3.0
+Painsaw	AlexBo	AlexRaidock			Ishq	Modelled	CC BY-SA 3.0
+Old Lasgun (legacy)	Stannum	Stannum	Stannum	Stannum		Replaced	CC BY-SA 3.0
+Lasgun	chris807	chris807, hypov8 (third person)		not animated??	Ishq / chris807	In game	CC BY-SA 4.0
+Mass driver (legacy)	Stannum	Stannum	Stannum	Stannum		Ingame	CC BY-SA 3.0
+Sniper rifle/MD	AlexBo	AlexRaidock			Ishq		CC BY-SA 3.0
+Chaingun/HMG	AlexBo	AlexRaidock			Ishq	Modelled	CC BY-SA 3.0
+Flamethrower	AlexBo	AlexRaidock	Stannum	???	None	Ingame	CC BY-SA 3.0
+Pulse Rifle (legacy)	Stannum	Stannum		Stannum	Ishq	Ingame	CC BY-SA 3.0
+Lucifer Cannon	AlexBo	Geno527			Ishq	Ingame	CC BY-SA 3.0
+Grenade	chris807	chris807		chris807	Enneract		CC BY-SA 4.0
+Human Buildables	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
+Reactor		chris807	chris807	chris807		Ingame	CC BY-SA 4.0
+Drill (previously Repeater)		chris807	chris807	chris807		Ingame	CC BY-SA 4.0
+RocketPod	AlexBo	chris807	chris807	chris807		Ingame	CC BY-SA 4.0
+Turret		chris807	chris807	chris807		Ingame	CC BY-SA 4.0
+Medipad	chris807	chris807	chris807 / Viech	chris807		Ingame	CC BY-SA 4.0
+Armoury		Warvinc	Warvinc	N/A		Ingame	CC BY-SA 3.0
+Telenode	Stannum	Warvinc	Warvinc / Viech (glow)			Ingame	CC BY-SA 3.0
+Old Drill		Warvinc	Warvinc	N/A		Replaced	CC BY 3.0
+Alien Players	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
+Tyrant	Gregstein	DandoomBuggy	DandoomBuggy	gavlig		Ingame/	CC BY-SA 4.0
+Dragoon	Khaos	RXMT	RXMT / Enneract (edit), Viech (glow)	gavlig		Ingame	CC BY-SA 3.0
+Marauder	Sewer Hrehorowicz	Osiris	Osiris	Russ Briggeman Jr., Burning Ice (first person)		Ingame	CC BY-SA 2.5
+Mantis	Sewer Hrehorowicz	Cupside	Stannum	???		Ingame	CC BY-SA 3.0
+Dretch	Gregstein	Gregstein	DandoomBuggy	gavlig		Ingame	CC BY-SA 3.0
+Granger	Khaos	Casey	Casey	???		Ingame	CC BY-SA 3.0
+Alien Buildables	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
+Overmind	Pevel	RXMT	RXMT	gavlig		Ingame	CC BY-SA 3.0
+Hive	AlexBo	lhdc	lhdc	gavlig		Ingame	CC BY-SA 3.0
+Hive insect		lhdc	lhdc	gavlig		Animated	CC BY-SA 3.0
+Booster	AlexBo	jdreyna	jdreyna/lhdc (edit), Viech (glow)	gavlig		Ingame	CC BY-SA 3.0
+Leech	Khaoz?	SyphonX	SyphonX	gavlig		Ingame	CC BY-SA 3.0
+Spiker	AlexBo?	lhdc	lhdc	gavlig		Ingame	CC BY-SA 3.0
+Tube		DandoomBuggy	DandoomBuggy	???		Ingame	CC BY-SA 3.0
+Trapper		DandoomBuggy	DandoomBuggy	CKid??		Ingame	CC BY-SA 3.0
+Barricade	AlexBo	SyphonX	SyphonX	gavlig		Ingame	CC BY-SA 3.0
+Egg	Pevel	SyphonX	SyphonX	gavlig		Ingame	CC BY-SA 3.0
+Creep	N/A	N/A	Osiris	N/A	N/A	Ingame	CC BY-SA 2.5
