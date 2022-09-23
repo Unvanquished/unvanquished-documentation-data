@@ -1,0 +1,324 @@
+#! /usr/bin/env python3
+#-*- coding: UTF-8 -*-
+
+# CC0 1.0 Unvanquished Developers
+# https://creativecommons.org/publicdomain/zero/1.0/
+
+import csv
+import os
+import sys
+import re
+
+end_line='\n'
+
+def myPrint(text):
+	print(text, end=end_line)
+
+def printCell(markup, class_blob, style_blob, cell):
+	class_string = ""
+
+	if class_string != "-":
+		class_string = " class=\"{}\"".format(class_blob)
+
+	style_string = ""
+
+	if style_blob != "-":
+		style_string = " style=\"{}\"".format(style_blob)
+
+	myPrint("<{}{}{}>{}</{}>".format(markup, class_string, style_string, cell, markup))
+
+def sanitizeAnchor(text):
+	text = re.sub(r"[^A-Za-z0-9.-]", "_", text)
+	text = re.sub(r"__*", "_", text)
+	text = re.sub(r"_$", "", text)
+	return text
+
+if len(sys.argv) < 2:
+	exit(1)
+
+arg_index = 1
+
+if sys.argv[1] == "--pack":
+	arg_index = 2
+	end_line=''
+
+if len(sys.argv) < arg_index + 1:
+	exit(1)
+
+file_name = sys.argv[arg_index]
+
+if not file_name.endswith(".tsv"):
+	exit(1)
+
+if not os.path.isfile(file_name):
+	exit(1)
+
+tsv_file = open(file_name, newline='')
+tsv_reader = csv.reader(tsv_file, delimiter='\t')
+
+last_update = "00000-00-00"
+status_index = -1
+vendor_index = -1
+tested_gpu_count = 0
+tested_configuration_count = 0
+
+myPrint("<noinclude>{{Documentation}}</noinclude>")
+myPrint("<table class=\"wikitable gpumatrix\">")
+
+title_row = []
+previous_row = []
+
+for row in tsv_reader:
+	while len(previous_row) < len(row):
+		previous_row.append("-")
+
+	if row[0] == '':
+		continue
+
+	if status_index != -1:
+		if row[status_index] == "-":
+			continue
+
+		if vendor_index != -1:
+			tested_configuration_count += 1
+
+			if row[vendor_index] != "↑":
+				tested_gpu_count += 1
+
+	myPrint("<tr>")
+
+	markup = "td"
+
+	if row[0] == "Brand":
+		title_row = row.copy()
+		markup = "th"
+
+	test_failure = False
+
+	for i in range(0, len(row)):
+		title = "-"
+
+		if i < len(title_row):
+			title = title_row[i]
+
+		cell = row[i]
+		previous_cell = previous_row[i]
+
+		fake_data = False
+
+		if markup == "th":
+			fake_data = True
+
+		if cell == "Status":
+			status_index = i
+
+		elif cell == "Vendor":
+			vendor_index = i
+
+		ignored_column_title_list = [
+			"Lith.",
+			"Core freq.",
+			"Shader freq.",
+			"Memory freq.",
+			"Mem. width, type",
+			"GLSL",
+			"FPS",
+		]
+
+		if title in ignored_column_title_list:
+			continue
+
+		if cell == "":
+			cell = "-"
+
+		if cell == "-":
+			fake_data = True
+
+		if title == "Availability":
+			if fake_data:
+				printCell(markup, "LL LD", "-", cell)
+
+			else:
+				keyword = cell[:3]
+				printCell(markup, "LL LD SA-{}".format(keyword), "-", cell)
+
+		elif title == "Status":
+			if fake_data:
+				printCell(markup, "LL", "-", cell)
+
+			else:
+				keyword = cell[:3]
+				printCell(markup, "LL SS-{}".format(keyword), "-", cell)
+
+			if cell in ["hang", "crash", "missing"]:
+				test_failure = True
+
+		elif title == "Preset":
+			if fake_data:
+				if test_failure:
+					cell="N/A"
+
+				printCell(markup, "LL", "-", cell)
+
+			else:
+				keyword = cell[:3]
+				printCell(markup, "LL SP-{}".format(keyword), "-", cell)
+
+		elif title == "Resolution":
+			if fake_data:
+				if test_failure:
+					cell = "N/A"
+
+				printCell(markup, "LL", "-", cell)
+
+			else:
+				resolution_string = cell.strip("+")
+				width_string = resolution_string.split("×")[0]
+				height_string = resolution_string.split("×")[1]
+				size = int(width_string) * int(height_string)
+
+				keyword = "med" # medium
+
+				if size < (1280 * 720):
+					keyword = "low"
+
+				elif size >= (1920 * 1080):
+					keyword = "ult" # ultra
+
+				printCell(markup, "LL SP-{}".format(keyword), "-", cell)
+
+		elif title == "Tester":
+			printCell(markup, "LL LD", "-", cell)
+
+		elif title == "Bus":
+			if fake_data:
+				printCell(markup, "LL", "-", cell)
+
+			else:
+				bus_cell = cell
+
+				if cell == "↑":
+					bus_cell = previous_cell
+
+				bus = bus_cell.split(" ")[0]
+				printed_cell = cell
+
+				if cell == "HyperTransport":
+					printed_cell = "H<span class=\"LD\">yper</span>T<span class=\"LD\">ransport</span>"
+
+				elif cell != "-":
+					cell_word_list = cell.split(" ")
+
+					printed_cell = cell_word_list[0]
+
+					if len(cell_word_list) > 1:
+						remaining_string = " ".join(cell_word_list[1:])
+						printed_cell += " <span class=\"LD\">{}</span>".format(remaining_string)
+
+				keyword = "unk" # unknown
+
+				if bus == "PCI":
+					keyword = "low"
+
+				elif bus in ["AGP", "HyperTransport"]:
+					keyword = "med" # medium
+
+				elif bus == "PCIe":
+					keyword = "hig" # high
+
+				printCell(markup, "LL SP-{}".format(keyword), "-", printed_cell)
+
+		elif title == "OpenGL":
+			if fake_data:
+				printed_cell = cell
+
+				if cell == title:
+					printed_cell = "<span class=\"LD\">Open</span>GL"
+
+				printCell(markup, "LL", "-", printed_cell)
+			else:
+				version_string = cell
+				printed_cell = cell
+
+				if cell.startswith("Core "):
+					version_string = version_string[5:]
+					printed_cell = "<span class=\"LD\">Core </span>{}".format(version_string)
+
+				version_string = version_string.split("?")[0]
+				version_string = version_string.replace(".", "")
+
+				keyword = "pas" # passed
+
+				if version_string == "No":
+					keyword = "mis" # missing
+
+				elif version_string < "21":
+					keyword = "mis" # missing
+
+				elif version_string < "30":
+					keyword = "slo" # slow
+
+				printCell(markup, "LL SS-{}".format(keyword), "-", printed_cell)
+
+		elif title == "Updated":
+			if markup == "td":
+				if last_update < cell:
+					last_update = cell
+
+			printCell(markup, "LD", "-", cell)
+
+		elif title == "Note":
+			printCell(markup, "LL", "-", cell)
+
+		elif title == "Launch":
+			printed_cell = cell
+
+			if markup == "td":
+				if cell not in ["-", "↑"]:
+					cell_substring = cell.split(" (")[0]
+					date_year = cell_substring[0:4]
+					date_remaining = cell_substring[4:]
+					printed_cell = "{}<span class=\"LD\">{}</span>".format(date_year, date_remaining)
+
+			printCell(markup, "LS", "-", printed_cell)
+
+		elif title == "Brand":
+			gpu_brand = cell
+			printCell(markup, "LS", "-", cell)
+
+		elif title == "Name":
+			gpu_name = cell
+			printed_cell = cell
+
+			if markup == "td":
+				printed_cell = ""
+
+				if gpu_name == "↑":
+					printed_cell = "↑"
+
+				else:
+					anchor = "{}_{}".format(sanitizeAnchor(gpu_brand), sanitizeAnchor(gpu_name))
+					printed_cell = "<span id=\"{}\"></span>[[#{}|{}]]".format(anchor, anchor, gpu_name)
+
+			printCell(markup, "LS", "-", printed_cell)
+
+		elif title in ["Micro arch.", "System", "Kernel module", "OpenGL driver"]:
+			printCell(markup, "LS", "-", cell)
+
+		else:
+			printCell(markup, "LD", "-", cell)
+
+		if markup == "th":
+			previous_row[ i ] = "-"
+
+		elif cell == "↑":
+			previous_row[ i ] = previous_cell
+
+		else:
+			previous_row[ i ] = cell
+
+	myPrint("</tr>")
+
+myPrint("</table>")
+
+print("Tested GPUs: '''{}''', tested configurations: '''{}''', last update: '''{}'''.".format(tested_gpu_count, tested_configuration_count, last_update))

@@ -34,7 +34,7 @@ The public Unvanquished GPU Compatibility matrix can be found there: [wiki:GPU_c
 Run this command:
 
 ```sh
-./translate-tsv --pack gpu-compatibility-matrix.tsv
+./translate --pack gpu-compatibility-matrix.tsv
 ```
 
 - Copy the output and paste it in this template page (replacing everything): [wiki:Template:GPU_compatibility_matrix](https://wiki.unvanquished.net/wiki/Template:GPU_compatibility_matrix).
