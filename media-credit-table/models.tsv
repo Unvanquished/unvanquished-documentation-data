@@ -1,55 +1,55 @@
 Human Players	Generation	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
-Battlesuit	3	PhilZero	lhdc	Stannum	gavlig	Ishq	Ingame	CC BY-SA 3.0
-Current Male	3		Angelo	Angelo			Ingame	CC BY-SA 3.0
+Battlesuit	3	PhilZero	lhdc	Stannum	gavlig	Ishq	In game	CC BY-SA 3.0
+Current Male	3		Angelo	Angelo			In game	CC BY-SA 3.0
 New Male	3		RXMT	Casey (female texture reuse)			Modelled	CC BY-SA 3.0
 Female	3		Casey	Casey			Modelled	CC BY-SA 3.0
 Glove / edited armour	3		Angelo / RXMT?? (edited)	Angelo / Stannum / RXMT (edited glove texture)			Modelled	CC BY-SA 3.0
-Light Armour	3		Angelo	Angelo / Stannum (touch up)			Ingame	CC BY-SA 3.0
-Medium Armour	3		Angelo	Angelo / Stannum / Viech (red deviation)			Ingame	CC BY-SA 3.0
-Jetpack	3	AlexBo	lhdc	lhdc		Enneract	Ingame	CC BY-SA 3.0
+Light Armour	3		Angelo	Angelo / Stannum (touch up)			In game	CC BY-SA 3.0
+Medium Armour	3		Angelo	Angelo / Stannum / Viech (red deviation)			In game	CC BY-SA 3.0
+Jetpack	3	AlexBo	lhdc	lhdc		Enneract	In game	CC BY-SA 3.0
 Human Weapons	Generation	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
-Construction Kit	2	Stannum	Stannum	Stannum	Stannum		Ingame	CC BY-SA 3.0
-Blaster	2	Stannum	Stannum	Stannum	Stannum	None	Ingame	CC BY-SA 3.0
+Construction Kit	2	Stannum	Stannum	Stannum	Stannum		In game	CC BY-SA 3.0
+Blaster	2	Stannum	Stannum	Stannum	Stannum	None	In game	CC BY-SA 3.0
 Pistol	3	AlexBo	AlexRaidock	AlexRaidock			Modelled	CC BY-SA 3.0
 Pistol	3	AlexBo	Cupside	Cupside		Ishq	Modelled	CC BY-SA 3.0
-SMG/Rifle	3	AlexBo	hristew		Burning Ice	Enneract	Ingame	CC BY-SA 3.0
-Painsaw	1		OverFlow	Jex			Ingame	CC BY-SA 2.5
+SMG/Rifle	3	AlexBo	hristew		Burning Ice	Enneract	In game	CC BY-SA 3.0
+Painsaw	1		OverFlow	Jex			In game	CC BY-SA 2.5
 Painsaw	3	AlexBo	AlexRaidock			Ishq	Modelled	CC BY-SA 3.0
 Old Lasgun	2	Stannum	Stannum	Stannum	Stannum		Replaced	CC BY-SA 3.0
 Lasgun	3	chris807	chris807, hypov8 (third person)		not animated??	Ishq / chris807	In game	CC BY-SA 4.0
-Mass driver	2	Stannum	Stannum	Stannum	Stannum		Ingame	CC BY-SA 3.0
+Mass driver	2	Stannum	Stannum	Stannum	Stannum		In game	CC BY-SA 3.0
 Sniper rifle/MD	3	AlexBo	AlexRaidock			Ishq		CC BY-SA 3.0
-Chaingun	1		OverFlow	Jex			Ingame	CC BY-SA 2.5
+Chaingun	1		OverFlow	Jex			In game	CC BY-SA 2.5
 Chaingun/HMG	3	AlexBo	AlexRaidock			Ishq	Modelled	CC BY-SA 3.0
-Flamethrower	3	AlexBo	AlexRaidock	Stannum	???	None	Ingame	CC BY-SA 3.0
-Pulse Rifle	2	Stannum	Stannum		Stannum	Ishq	Ingame	CC BY-SA 3.0
-Lucifer Cannon	3	AlexBo	Geno527			Ishq	Ingame	CC BY-SA 3.0
-Grenade	3	chris807	chris807		chris807	Enneract	Ingame	CC BY-SA 4.0
+Flamethrower	3	AlexBo	AlexRaidock	Stannum	???	None	In game	CC BY-SA 3.0
+Pulse Rifle	2	Stannum	Stannum		Stannum	Ishq	In game	CC BY-SA 3.0
+Lucifer Cannon	3	AlexBo	Geno527			Ishq	In game	CC BY-SA 3.0
+Grenade	3	chris807	chris807		chris807	Enneract	In game	CC BY-SA 4.0
 Human Buildables	Generation	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
-Reactor	3		chris807	chris807	chris807		Ingame	CC BY-SA 4.0
-Drill (previously Repeater)	3		chris807	chris807	chris807		Ingame	CC BY-SA 4.0
-RocketPod	3	AlexBo	chris807	chris807	chris807		Ingame	CC BY-SA 4.0
-Turret	3		chris807	chris807	chris807		Ingame	CC BY-SA 4.0
-Medipad	3	chris807	chris807	chris807 / Viech	chris807		Ingame	CC BY-SA 4.0
-Armoury	3		Warvinc	Warvinc	N/A		Ingame	CC BY-SA 3.0
-Telenode	3	Stannum	Warvinc	Warvinc / Viech (glow)			Ingame	CC BY-SA 3.0
+Reactor	3		chris807	chris807	chris807		In game	CC BY-SA 4.0
+Drill (previously Repeater)	3		chris807	chris807	chris807		In game	CC BY-SA 4.0
+RocketPod	3	AlexBo	chris807	chris807	chris807		In game	CC BY-SA 4.0
+Turret	3		chris807	chris807	chris807		In game	CC BY-SA 4.0
+Medipad	3	chris807	chris807	chris807 / Viech	chris807		In game	CC BY-SA 4.0
+Armoury	3		Warvinc	Warvinc	N/A		In game	CC BY-SA 3.0
+Telenode	3	Stannum	Warvinc	Warvinc / Viech (glow)			In game	CC BY-SA 3.0
 Old Drill	3		Warvinc	Warvinc	N/A		Replaced	CC BY 3.0
 Alien Players	3	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
-Tyrant	3	Gregstein	DandoomBuggy	DandoomBuggy	gavlig		Ingame	CC BY-SA 4.0
-Dragoon	3	Khaos	RXMT	RXMT / Enneract (edit), Viech (glow)	gavlig		Ingame	CC BY-SA 3.0
-Marauder	3	Sewer Hrehorowicz	Osiris	Osiris	Russ Briggeman Jr., Burning Ice (first person)		Ingame	CC BY-SA 2.5
-Mantis	3	Sewer Hrehorowicz	Cupside	Stannum	???		Ingame	CC BY-SA 3.0
-Dretch	3	Gregstein	Gregstein	DandoomBuggy	gavlig		Ingame	CC BY-SA 3.0
-Granger	3	Khaos	Casey	Casey	???		Ingame	CC BY-SA 3.0
+Tyrant	3	Gregstein	DandoomBuggy	DandoomBuggy	gavlig		In game	CC BY-SA 4.0
+Dragoon	3	Khaos	RXMT	RXMT / Enneract (edit), Viech (glow)	gavlig		In game	CC BY-SA 3.0
+Marauder	3	Sewer Hrehorowicz	Osiris	Osiris	Russ Briggeman Jr., Burning Ice (first person)		In game	CC BY-SA 2.5
+Mantis	3	Sewer Hrehorowicz	Cupside	Stannum	???		In game	CC BY-SA 3.0
+Dretch	3	Gregstein	Gregstein	DandoomBuggy	gavlig		In game	CC BY-SA 3.0
+Granger	3	Khaos	Casey	Casey	???		In game	CC BY-SA 3.0
 Alien Buildables	Generation	Concept Artist	Modeller	Texturer	Animator	Implementor	Status	License
-Overmind	3	Pevel	RXMT	RXMT	gavlig		Ingame	CC BY-SA 3.0
-Hive	3	AlexBo	lhdc	lhdc	gavlig		Ingame	CC BY-SA 3.0
+Overmind	3	Pevel	RXMT	RXMT	gavlig		In game	CC BY-SA 3.0
+Hive	3	AlexBo	lhdc	lhdc	gavlig		In game	CC BY-SA 3.0
 Hive insect	3		lhdc	lhdc	gavlig		Animated	CC BY-SA 3.0
-Booster	3	AlexBo	jdreyna	jdreyna/lhdc (edit), Viech (glow)	gavlig		Ingame	CC BY-SA 3.0
-Leech	3	Khaoz?	SyphonX	SyphonX	gavlig		Ingame	CC BY-SA 3.0
-Spiker	3	AlexBo?	lhdc	lhdc	gavlig		Ingame	CC BY-SA 3.0
-Tube	3		DandoomBuggy	DandoomBuggy	???		Ingame	CC BY-SA 3.0
-Trapper	3		DandoomBuggy	DandoomBuggy	CKid??		Ingame	CC BY-SA 3.0
-Barricade	3	AlexBo	SyphonX	SyphonX	gavlig		Ingame	CC BY-SA 3.0
-Egg	3	Pevel	SyphonX	SyphonX	gavlig		Ingame	CC BY-SA 3.0
-Creep	3	N/A	N/A	Osiris	N/A	N/A	Ingame	CC BY-SA 2.5
+Booster	3	AlexBo	jdreyna	jdreyna/lhdc (edit), Viech (glow)	gavlig		In game	CC BY-SA 3.0
+Leech	3	Khaoz?	SyphonX	SyphonX	gavlig		In game	CC BY-SA 3.0
+Spiker	3	AlexBo?	lhdc	lhdc	gavlig		In game	CC BY-SA 3.0
+Tube	3		DandoomBuggy	DandoomBuggy	???		In game	CC BY-SA 3.0
+Trapper	3		DandoomBuggy	DandoomBuggy	CKid??		In game	CC BY-SA 3.0
+Barricade	3	AlexBo	SyphonX	SyphonX	gavlig		In game	CC BY-SA 3.0
+Egg	3	Pevel	SyphonX	SyphonX	gavlig		In game	CC BY-SA 3.0
+Creep	3	N/A	N/A	Osiris	N/A	N/A	In game	CC BY-SA 2.5
