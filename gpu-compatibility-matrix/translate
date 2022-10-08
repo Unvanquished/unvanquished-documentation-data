@@ -123,6 +123,7 @@ for row in tsv_reader:
 			"Mem. width, type",
 			"GLSL",
 			"FPS",
+			"",
 		]
 
 		if title in ignored_column_title_list:
