@@ -33,6 +33,23 @@ def sanitizeAnchor(text):
 	text = re.sub(r"_$", "", text)
 	return text
 
+def splitOnTwo(text):
+	word_list = cell.split()
+
+	if len(word_list):
+		text = word_list[0]
+		space = True
+		for word in word_list[1:]:
+			if space:
+				text += "&nbsp;"
+				space = False
+			else:
+				text += "<br/>"
+				space = True
+			text += word
+
+	return text
+
 if len(sys.argv) < 2:
 	exit(1)
 
@@ -303,7 +320,15 @@ for row in tsv_reader:
 
 			printCell(markup, "LS", "-", printed_cell)
 
-		elif title in ["Micro arch.", "System", "Kernel module", "OpenGL driver"]:
+		elif title in ["OpenGL driver", "Kernel module"]:
+			if cell == title:
+				cell = title.replace(" ", "<br/>")
+			else:
+				cell = splitOnTwo(cell)
+
+			printCell(markup, "LS", "-", cell)
+
+		elif title in ["Micro arch.", "System"]:
 			printCell(markup, "LS", "-", cell)
 
 		else:
