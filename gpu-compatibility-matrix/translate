@@ -76,7 +76,7 @@ for row in tsv_reader:
 		continue
 
 	if status_index != -1:
-		if row[status_index] == "-":
+		if row[status_index] in ["", "-"]:
 			continue
 
 		if vendor_index != -1:
@@ -224,7 +224,7 @@ for row in tsv_reader:
 				elif bus in ["AGP", "HyperTransport"]:
 					keyword = "med" # medium
 
-				elif bus == "PCIe":
+				elif bus in ["PCIe", "chip"]:
 					keyword = "hig" # high
 
 				printCell(markup, "LL SP-{}".format(keyword), "-", printed_cell)
