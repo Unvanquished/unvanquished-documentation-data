@@ -79,13 +79,17 @@ printf '0300 0302 0380' \
 
 ```sh
 # Device name, OpenGL and GLSL versions…
-xrandr --listproviders | egrep '^Provider ' | cut -f1 -d':' | cut -f2 -d' ' \
-	| xargs -I{} sh -c 'DRI_PRIME={} glxinfo -B'
+find '/sys/class/drm' -type l -name 'card[0-9]' -exec realpath {}/device \; \
+	| xargs -I{} -P1 basename {} \
+	| sed -e 's/[:\.]/_/g;s/^/pci-/' \
+	| xargs -I{} -P1 sh -c 'DRI_PRIME={} glxinfo -B'
 ```
 
 ```sh
 # Verbose information with available OpenGL extensions, OpenGL limits…
-xrandr --listproviders | egrep '^Provider ' | cut -f1 -d':' | cut -f2 -d' ' \
-	| xargs -I{} sh -c 'DRI_PRIME={} glxinfo -l'
+find '/sys/class/drm' -type l -name 'card[0-9]' -exec realpath {}/device \; \
+	| xargs -I{} -P1 basename {} \
+	| sed -e 's/[:\.]/_/g;s/^/pci-/' \
+	| xargs -I{} -P1 sh -c 'DRI_PRIME={} glxinfo -l'
 ```
 
