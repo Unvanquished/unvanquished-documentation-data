@@ -276,6 +276,9 @@ for row in tsv_reader:
 				elif version_string < "30":
 					keyword = "slo" # slow
 
+				elif version_string < "46":
+					keyword = "pla" # playable
+
 				printCell(markup, "LL SS-{}".format(keyword), "-", printed_cell)
 
 		elif title == "Updated":
