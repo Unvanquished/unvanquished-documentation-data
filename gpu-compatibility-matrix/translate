@@ -206,7 +206,7 @@ for row in tsv_reader:
 				printCell(markup, "LL SP-{}".format(keyword), "-", cell)
 
 		elif title == "Tester":
-			printCell(markup, "LL LD", "-", cell)
+			printCell(markup, "LD", "-", cell)
 
 		elif title == "Bus":
 			if fake_data:
@@ -289,9 +289,9 @@ for row in tsv_reader:
 			printCell(markup, "LD", "-", cell)
 
 		elif title == "Note":
-			printCell(markup, "LL", "-", cell)
+			printCell(markup, "LD", "-", cell)
 
-		elif title == "Launch":
+		elif title == "Year":
 			printed_cell = cell
 
 			if markup == "td":
@@ -331,7 +331,7 @@ for row in tsv_reader:
 
 			printCell(markup, "LS", "-", cell)
 
-		elif title in ["Micro arch.", "System"]:
+		elif title in ["System"]:
 			printCell(markup, "LS", "-", cell)
 
 		else:
