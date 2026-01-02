@@ -246,6 +246,38 @@ for row in tsv_reader:
 
 				printCell(markup, "LL SP-{}".format(keyword), "-", printed_cell)
 
+		elif title == "Host":
+			if fake_data:
+				printCell(markup, "LL", "-", cell)
+
+			elif cell == "↑":
+				printCell(markup, "LS", "-", cell)
+
+			else:
+				host_name = cell
+
+				host_emoji = "❓"
+
+				host_emojis = {
+					"workstation": "🖥️",
+					"minipc": "🖥️",
+					"laptop": "💻",
+					"console": "🎮",
+					"server": "🗄️",
+					"NAS": "🗄️",
+					"blade": "🗄️",
+					"phone": "📱",
+					"tablet": "📱",
+					"singleboard": "🧩",
+				}
+
+				if host_name in host_emojis.keys():
+					host_emoji = host_emojis[host_name]
+
+				printed_cell = "<span title=\"{}\">{}<br/><span class=\"LD\">{}</span></span>".format(host_name, host_emoji, host_name)
+
+				printCell(markup, "LS", "-", printed_cell)
+
 		elif title == "OpenGL":
 			if fake_data:
 				printed_cell = cell
