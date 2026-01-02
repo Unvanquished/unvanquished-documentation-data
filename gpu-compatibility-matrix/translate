@@ -256,25 +256,25 @@ for row in tsv_reader:
 			else:
 				host_name = cell
 
-				host_emoji = "❓"
+				host_emoji = "question"
 
 				host_emojis = {
-					"workstation": "🖥️",
-					"minipc": "🖥️",
-					"laptop": "💻",
-					"console": "🎮",
-					"server": "🗄️",
-					"NAS": "🗄️",
-					"blade": "🗄️",
-					"phone": "📱",
-					"tablet": "📱",
-					"singleboard": "🧩",
+					"workstation": "computer",
+					"minipc": "computer",
+					"laptop": "laptop",
+					"console": "gamepad",
+					"server": "server",
+					"NAS": "server",
+					"blade": "server",
+					"phone": "mobile",
+					"tablet": "tablet",
+					"singleboard": "microchip",
 				}
 
 				if host_name in host_emojis.keys():
 					host_emoji = host_emojis[host_name]
 
-				printed_cell = "<span title=\"{}\">{}<br/><span class=\"LD\">{}</span></span>".format(host_name, host_emoji, host_name)
+				printed_cell = "<span title=\"{}\"><i class=\"fa-solid fa-{}\"></i><br/><span class=\"LD\">{}</span></span>".format(host_name, host_emoji, host_name)
 
 				printCell(markup, "LS", "-", printed_cell)
 
