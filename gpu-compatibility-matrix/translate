@@ -368,7 +368,47 @@ for row in tsv_reader:
 			printCell(markup, "LS", "-", printed_cell)
 
 		elif title in ["System"]:
-			printCell(markup, "LS", "-", cell)
+			if fake_data:
+				printCell(markup, "LL", "-", cell)
+
+			else:
+				system_name = cell
+				system_basename = system_name.split(" ")[0]
+
+				system_topic = "solid"
+				system_emoji = "question"
+
+				system_linux_names = [
+					"Debian",
+					"Ubuntu",
+					"Mint",
+					"Mageia",
+					"Manjaro",
+					"Arch",
+					"SteamOS",
+					"Bazzite",
+					"ChimeraOS",
+					"HoloISO",
+					"Pop!_OS",
+				]
+
+				system_emojis = {
+					"Windows": "windows",
+					"macOS": "apple",
+					"FreeBSD": "freebsd",
+				}
+
+				if system_basename in system_linux_names:
+					system_topic = "brands"
+					system_emoji = "linux"
+
+				elif system_basename in system_emojis.keys():
+					system_topic = "brands"
+					system_emoji = system_emojis[system_basename]
+
+				printed_cell = "<i class=\"fa-{} fa-{}\"></i> {}".format(system_topic, system_emoji, system_name)
+
+				printCell(markup, "LS", "-", printed_cell)
 
 		else:
 			printCell(markup, "LD", "-", cell)
