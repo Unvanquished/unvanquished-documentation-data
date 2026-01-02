@@ -318,8 +318,12 @@ for row in tsv_reader:
 					printed_cell = "↑"
 
 				else:
+					formatted_gpu_name = gpu_name
+					if "(" in gpu_name:
+						formatted_gpu_name = formatted_gpu_name.replace(" (", "<br/>(")
+
 					anchor = "{}_{}".format(sanitizeAnchor(gpu_brand), sanitizeAnchor(gpu_name))
-					printed_cell = "<span id=\"{}\"></span>[[#{}|{}]]".format(anchor, anchor, gpu_name)
+					printed_cell = "<span id=\"{}\"></span>[[#{}|{}]]".format(anchor, anchor, formatted_gpu_name)
 
 			printCell(markup, "LS", "-", printed_cell)
 
