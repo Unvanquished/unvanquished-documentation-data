@@ -361,11 +361,11 @@ for row in tsv_reader:
 
 		elif title in ["OpenGL driver", "Kernel module"]:
 			if cell == title:
-				cell = title.replace(" ", "<br/>")
+				printed_cell = title.replace(" ", "<br/>")
 			else:
-				cell = splitOnTwo(cell)
+				printed_cell = splitOnTwo(cell)
 
-			printCell(markup, "LS", "-", cell)
+			printCell(markup, "LS", "-", printed_cell)
 
 		elif title in ["System"]:
 			printCell(markup, "LS", "-", cell)
